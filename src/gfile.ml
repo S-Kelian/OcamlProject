@@ -58,7 +58,7 @@ let export path graph =
   let ff = open_out path in
 
   (* Write in this file. *)
-  fprintf ff "digraph Our graph {\n" ;
+  fprintf ff "digraph our_graph {\n" ;
   fprintf ff "  fontname=\"Helvetica,Arial,sans-serif\"\n" ;
   fprintf ff "  node [fontname=\"Helvetica,Arial,sans-serif\"]\n" ;
   fprintf ff "  edge [fontname=\"Helvetica,Arial,sans-serif\"]\n" ;
