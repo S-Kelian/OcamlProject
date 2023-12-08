@@ -1,8 +1,8 @@
 .PHONY: all build format edit demo clean
 
-src?=0
-dst?=5
-graph?=graph1.txt
+src?=5
+dst?=9
+graph?=graph2.txt
 
 all: build
 
@@ -22,6 +22,7 @@ demo: build
 	./ftest.exe graphs/${graph} $(src) $(dst) outfile
 	@echo "\n   🥁  RESULT (content of outfile)  🥁\n"
 	@cat outfile
+	dot -Tsvg outfile > outfile.svg
 
 clean:
 	find -L . -name "*~" -delete

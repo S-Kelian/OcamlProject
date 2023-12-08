@@ -1,6 +1,6 @@
 open Graph
 
-type 'a path = (id * id * 'a) list
+type path = id list
 
-val find_path : 'a graph -> id -> id -> id list -> id list
+val find_path : int graph -> id -> id -> id list -> path option
 
