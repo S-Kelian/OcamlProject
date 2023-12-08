@@ -16,11 +16,14 @@ let add_arc g id1 id2 n=
 let print_int_list lst =
   List.iter (fun x -> print_int x; print_string " ") lst;;
 
-let test_find_path graphname src tgt = 
+let test_find_path_with_maxflow graphname src tgt = 
   let graph = from_file graphname in 
   let intgraph = gmap graph (fun x -> int_of_string x) in
   let path = find_path intgraph src tgt [] in
   match path with
   | None -> print_string "No path found" 
-  | Some p -> print_int_list p
+  | Some p -> print_int_list p; 
+    let max = max_flow_of_path p intgraph 99 in print_string "Max flow : ";
+    print_int max;;
 ;;
+

@@ -17,3 +17,13 @@ let rec find_path graph start finish visited =
           | None -> loop rest
     in
     loop arcsSortant
+
+let rec max_flow_of_path list graph acu = 
+  match list with
+  | [] -> 0
+  | _ :: [] -> acu
+  | first :: second :: rest -> 
+    let arc = find_arc graph first second in
+    match arc with 
+    | None -> failwith "Arc not found"
+    | Some a -> if a.lbl < acu then max_flow_of_path (second :: rest) graph a.lbl else max_flow_of_path (second :: rest) graph acu

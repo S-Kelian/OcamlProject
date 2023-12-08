@@ -33,7 +33,7 @@ let () =
   let () = export outfile graph in
 
   Printf.printf "\n\n\nTest find_path entre %d et %d \n" _source _sink;
-  let () = test_find_path infile _source _sink in
+  let () = test_find_path_with_maxflow infile _source _sink in
   Printf.printf "\n\n\n";
   ()
 
