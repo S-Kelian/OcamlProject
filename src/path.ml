@@ -18,6 +18,7 @@ let rec find_path graph start finish visited =
     in
     loop arcsSortant
 
+(*get max flow = get minimum label of this path*)
 let rec max_flow_of_path list graph acu = 
   match list with
   | [] -> 0
@@ -27,3 +28,7 @@ let rec max_flow_of_path list graph acu =
     match arc with 
     | None -> failwith "Arc not found"
     | Some a -> if a.lbl < acu then max_flow_of_path (second :: rest) graph a.lbl else max_flow_of_path (second :: rest) graph acu
+
+    
+
+(*update graph*)

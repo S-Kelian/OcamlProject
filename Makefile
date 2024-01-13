@@ -2,7 +2,7 @@
 
 src?=0
 dst?=5
-graph?=graph4.txt
+graph?=graph5.txt
 
 all: build
 
@@ -23,6 +23,15 @@ demo: build
 	@echo "\n   🥁  RESULT (content of outfile)  🥁\n"
 	@cat outfile
 	dot -Tsvg outfile > outfile.svg
+
+algotest: build
+	@echo "\n   ⚡  EXECUTING  ⚡\n"
+	./ftest.exe graphs/${graph} $(src) $(dst) outfile outfile_after_algo_from_$(src)_to_$(dst)
+	@echo "\n   🥁  RESULT (content of outfile)  🥁\n"
+	@cat outfile
+	@cat outfile outfile_after_algo_from_$(src)_to_$(dst)
+	dot -Tsvg outfile > outfile.svg
+	dot -Tsvg outfile > outfile_after_algo_from_$(src)_to_$(dst).svg
 
 clean:
 	find -L . -name "*~" -delete

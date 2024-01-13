@@ -7,6 +7,7 @@ let gmap gr f =
   let newGraph = clone_nodes gr in
   e_fold gr (fun g {src=n1; tgt=n2; lbl=label} -> new_arc g {src=n1; tgt=n2; lbl=f label}) newGraph;;
 
+(* add value of label*)
 let add_arc g id1 id2 n= 
   match find_arc g id1 id2 with
   | None -> new_arc g {src=id1;  tgt=id2; lbl=n}
@@ -26,4 +27,7 @@ let test_find_path_with_maxflow graphname src tgt =
     let max = max_flow_of_path p intgraph 99 in print_string "Max flow : ";
     print_int max;;
 ;;
+
+
+
 

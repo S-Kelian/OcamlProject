@@ -11,7 +11,6 @@ type 'a graph = (id * 'a arc list) list
 exception Graph_error of string
 
 let empty_graph = []
-
 let node_exists gr id = List.mem_assoc id gr
 
 let out_arcs gr id =

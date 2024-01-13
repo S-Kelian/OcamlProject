@@ -16,7 +16,7 @@ let () =
     end ;
 
 
-  (* Arguments are : infile(1) source-id(2) sink-id(3) outfile(4) *)
+  (* Arguments are : infile(1) source-id(2) sink-id(3) outfile(4) outfileApresAlgo(5) *)
 
   let infile = Sys.argv.(1)
   and outfile = Sys.argv.(4)
@@ -27,6 +27,7 @@ let () =
   in
 
   (* Open file *)
+
   let graph = from_file infile in
 
   (* Rewrite the graph that has been read. *)
@@ -35,5 +36,10 @@ let () =
   Printf.printf "\n\n\nTest find_path entre %d et %d \n" _source _sink;
   let () = test_find_path_with_maxflow infile _source _sink in
   Printf.printf "\n\n\n";
+
+  Printf.printf "\n\n\nTest find_path entre %d et %d \n" _source _sink;
+  let () = test_find_path_with_maxflow infile _source _sink in
+  Printf.printf "\n\n\n";
+
   ()
 
