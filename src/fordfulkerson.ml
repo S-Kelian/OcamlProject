@@ -10,6 +10,10 @@ type lbl_flot = {
 }
 
 
+let get_flot_actuel lblf = lblf.flot_actuel;;
+let get_cap lblf = lblf.cap;;
+
+
 
 
 let string_lbl_flot lbl = "(" ^ string_of_int lbl.flot_actuel ^ "/" ^ string_of_int lbl.cap ^ ")";;
@@ -45,6 +49,7 @@ let update_path_labels path graph flow =
           add_newArcs (second :: rest) graph flow graph
   in add_newArcs path intGraph flow intGraph
 
+ 
 
   let update_path_labels_flot path graph flow =
     let cloneGraph = clone_nodes graph in
@@ -134,6 +139,9 @@ let rec ford_fulkerson_algo_lblflot graph src tgt =
  ;;
 
 
+ let lblflot_to_string label = Printf.sprintf "(%d/%d)" label.flot_actuel label.cap
+ 
+ 
  let string_to_label_flot label = Scanf.sscanf label "(%d/%d)" (fun flot c -> {flot_actuel = flot; cap = c})
  let label_flot_to_string label = "(" ^ string_of_int label.flot_actuel ^ "/" ^ string_of_int label.cap ^ ")"
   let initial_graph_flot_from_string graph = gmap graph string_to_label_flot;;
