@@ -9,7 +9,7 @@ open Graph
 (*p:le chemin augmentant*)
 (*Si l'arête actuelle est dans le chemin augmentant, on soustrait la capacité minimale de la capacité existante (capacité - min_capacity). *)
 
-(* Modifie les label du graph à partir du maxflow du chemin path*)
+(* Modifie les label du graph à partir du maxflow du chemin path
 let update_path_labels path graph flow =
   let cloneGraph = clone_nodes graph in
   let intGraph = gmap cloneGraph (fun x -> int_of_string x) in
@@ -28,7 +28,7 @@ let update_path_labels path graph flow =
         else
           add_newArcs (second :: rest) graph flow graph
   in add_newArcs path intGraph flow intGraph
-
+*)
 
 (*algo principale*)
 let rec ford_fulkerson_algo graph src tgt = 
