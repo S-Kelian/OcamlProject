@@ -49,7 +49,7 @@ let rec ford_fulkerson_algo graph src tgt =
 let rec ford_fulkerson_algo_lblflot graph src tgt = 
   let ecart_graph = find_ecart_graph graph in
   let path  = find_path ecart_graph src tgt [] in
-   match is_path_empty path with
+   match path with
    | None -> graph
    | Some p -> 
       let flot = max_flow_of_path_cap p graph 99 in 
