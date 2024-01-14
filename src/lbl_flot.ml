@@ -12,6 +12,8 @@ type lbl_flot = {
 let get_lbl label = label.lbl
 
 let string_lbl_flot lbl = "(" ^ string_of_int lbl.flot_actuel ^ "/" ^ string_of_int lbl.cap ^ ")";;
+let label_flot_to_string (label:lbl_flot) = "(" ^ string_of_int label.flot_actuel ^ "/" ^ string_of_int label.cap ^ ")"
+let string_to_label_flot label = Scanf.sscanf label "(%d/%d)" (fun flot cap -> {flot_actuel = flot; cap = cap})
 
 
 
@@ -23,7 +25,7 @@ let update_path_labels_flot path graph flow =
     | [] -> graph
     | _ :: [] -> graph
     | first :: second :: rest ->
-      let arc = find_arc graph first second in
+      let arc = find_arc graphRef first second in
       match arc with
       | None -> failwith "Arc not found"
       | Some a ->

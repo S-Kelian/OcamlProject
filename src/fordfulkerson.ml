@@ -1,8 +1,6 @@
 open Lbl_flot
 open Path
 open Tools
-open Gfile
-open Graph
 
 
 (*TODO: update the current_flot (augment or reduce) of all arcs found in this path  *)
@@ -43,15 +41,14 @@ let rec ford_fulkerson_algo graph src tgt =
      ;;
 
   
-(*let label_flot_to_string (label:lbl_flot) = "(" ^ string_of_int label.flot_actuel ^ "/" ^ string_of_int label.cap ^ ")"
+
 
 (* Convert a string (1/2) en label flot (1, 2) *)
-let string_to_label_flot label = Scanf.sscanf label "(%d/%d)" (fun flot cap -> {flot_actuel = flot; cap = cap})
 
 let read_flot_graph_from_string_graph graph = gmap graph string_to_label_flot
 let export_string_graph_from_flot_graph graph = gmap graph label_flot_to_string
 
-*)
+
 
 
   
