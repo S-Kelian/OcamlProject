@@ -1,19 +1,22 @@
-
-open Graph
+open Lbl_flot
 open Gfile
+open Graph
 
 
-type lbl_flot
-type label_flot_cost
-
-type flot_graph = lbl_flot graph
-val string_lbl_flot : lbl_flot -> string
 val update_path_labels : path -> 'a graph -> int -> 'a graph
-val update_path_labels_flot: path -> lbl_flot graph -> int -> lbl_flot graph
-val max_flow_of_path_cap  : id list -> lbl_flot graph -> int -> int
-val find_ecart_arc : 'a arc -> 'a arc
-val find_ecart_graph : lbl_flot graph -> id graph
-val ford_fulkerson_algo : lbl_flot graph -> 'a -> 'b -> lbl_flot graph
+
+val ford_fulkerson_algo : lbl_flot graph -> 'a -> 'b -> lbl_flot graph 
+val ford_fulkerson_algo_lblflot : lbl_flot graph -> 'a -> 'b -> lbl_flot graph 
+
+
+val label_flot_to_string: lbl_flot -> string
+
+(* Convert a string (1/2) en label flot (1, 2) *)
+val string_to_label_flot: string -> lbl_flot 
+
+val read_flot_graph_from_string_graph: string graph -> lbl_flot graph
+val export_string_graph_from_flot_graph:  lbl_flot graph-> string graph
+
 
 
 

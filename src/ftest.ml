@@ -1,5 +1,5 @@
 open Gfile
-open Tools
+open Fordfulkerson
 
 let () =
 
@@ -20,6 +20,7 @@ let () =
 
   let infile = Sys.argv.(1)
   and outfile = Sys.argv.(4)
+ (* and outfileApresAlgo = Sys.argv.(5)*)
 
   (* These command-line arguments are not used for the moment. *)
   and _source = int_of_string Sys.argv.(2)
@@ -28,18 +29,10 @@ let () =
 
   (* Open file *)
 
-  let graph = from_file infile in
 
-  (* Rewrite the graph that has been read. *)
-  let () = export outfile graph in
+  let graph = read_flot_graph_from_string_graph (from_file infile) in
 
-  Printf.printf "\n\n\nTest find_path entre %d et %d \n" _source _sink;
-  let () = test_find_path_with_maxflow infile _source _sink in
-  Printf.printf "\n\n\n";
+  (* NB : Constructeurs, Setteurs, et Getteurs ne seront pas testés *)
+  export outfile (export_string_graph_from_flot_graph (ford_fulkerson_algo_lblflot graph _source _sink))
 
-  Printf.printf "\n\n\nTest find_path entre %d et %d \n" _source _sink;
-  let () = test_find_path_with_maxflow infile _source _sink in
-  Printf.printf "\n\n\n";
-
-  ()
 
