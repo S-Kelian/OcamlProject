@@ -1,8 +1,6 @@
-
-
-(*open Path*)
 open Tools
 open Graph
+open Path
 
 type lbl_flot = {
   flot_actuel : int;
@@ -15,40 +13,15 @@ let string_lbl_flot lbl = "(" ^ string_of_int lbl.flot_actuel ^ "/" ^ string_of_
 let label_flot_to_string (label:lbl_flot) = "(" ^ string_of_int label.flot_actuel ^ "/" ^ string_of_int label.cap ^ ")"
 let string_to_label_flot label = Scanf.sscanf label "(%d/%d)" (fun flot cap -> {flot_actuel = flot; cap = cap})
 
+let update_flot graph path flot =
+  let newGraph = clone_nodes graph in
+  e_fold graph (fun acu arc -> 
+    let arc_found = find_arc_in_path graph path arc.src arc.tgt in
+    match arc_found with
+    | None -> new_arc acu {src = arc.src; tgt = arc.tgt; lbl = arc.lbl}
+    | Some _ -> new_arc acu {src = arc.src; tgt = arc.tgt; lbl = {flot_actuel = arc.lbl.flot_actuel + flot; cap = arc.lbl.cap}}
+  ) newGraph 
 
-
-let update_path_labels_flot path graph flow =
-  let cloneGraph = clone_nodes graph in
- (*let intGraph = gmap cloneGraph (fun x -> int_of_string x) in*)
-  let rec add_newArcs path graphRef flow graph =
-    match path with
-    | [] -> graph
-    | _ :: [] -> graph
-    | first :: second :: rest ->
-      let arc = find_arc graphRef first second in
-      match arc with
-      | None -> failwith "Arc not found"
-      | Some a ->
-        if a.lbl.cap - a.lbl.flot_actuel - flow > 0 then
-          let flotA = a.lbl.flot_actuel + flow in
-          let labelflot = {flot_actuel = flotA ; cap = a.lbl.cap} in
-          let newA  = { src = a.src ; tgt = a.tgt ; lbl= labelflot} in 
-          let newGraph = new_arc graph newA  in
-          add_newArcs (second :: rest) graph flow newGraph
-        else
-          add_newArcs (second :: rest) graph flow graph
-  in add_newArcs path cloneGraph flow cloneGraph
-
-  (*let rec max_flow_of_path_cap list graph acu = 
-    match list with
-    | [] -> 0
-    | _ :: [] -> acu
-    | first :: second :: rest -> 
-      let arc = find_arc graph first second in
-      match arc with 
-      | None -> failwith "Arc not found"
-      | Some a -> if a.lbl.cap < acu then max_flow_of_path_cap (second :: rest) graph a.lbl.cap else max_flow_of_path_cap (second :: rest) graph acu
-*)
   (*trouver l'arc d'écart *)
 
 let find_ecart_arc arc =
@@ -69,24 +42,6 @@ let find_ecart_graph graph =
           let n = find_ecart_arc arc in
           let newA3 = { src = arc.src ; tgt = arc.tgt ; lbl = n.lbl.flot_actuel} in 
           new_arc graph newA3
-        (*  To do:
-        let newA4 = { src = arc.tgt ; tgt = arc.src ; lbl = arc.lbl.flot_actuel} in 
-           new_arc graph newA4
-           *)
       )
   in 
   e_fold graph find_un_ecart newGraph
-
-
-
-
-
-
-
-
-  
-
-  
-
-
-  

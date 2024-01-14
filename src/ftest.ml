@@ -33,9 +33,10 @@ let () =
 
 
   let graph = read_flot_graph_from_string_graph (from_file infile) in
-  export outfile (export_string_graph_from_flot_graph ( graph ))
 
   (* NB : Constructeurs, Setteurs, et Getteurs ne seront pas testés *)
-  (*export outfile (export_string_graph_from_flot_graph (ford_fulkerson_algo graph _source _sink))*)
+  Printf.printf " Debut de l'algorithme de Ford-Fulkerson \n";
+  let exitGraph = ford_fulkerson_algo graph _source _sink in
+  export outfile (export_string_graph_from_flot_graph exitGraph)
 
 
