@@ -68,11 +68,11 @@ let find_ecart_graph graph =
       else(
           let n = find_ecart_arc arc in
           let newA3 = { src = arc.src ; tgt = arc.tgt ; lbl = n.lbl.flot_actuel} in 
-          new_arc graph newA3
-        (*  To do:
-        let newA4 = { src = arc.tgt ; tgt = arc.src ; lbl = arc.lbl.flot_actuel} in 
-           new_arc graph newA4
-           *)
+          let g = new_arc graph newA3
+          in  
+          let newA4 = { src = arc.tgt ; tgt = arc.src ; lbl = arc.lbl.flot_actuel} in 
+           new_arc g newA4
+           
       )
   in 
   e_fold graph find_un_ecart newGraph
