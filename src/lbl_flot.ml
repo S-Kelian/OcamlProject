@@ -37,7 +37,7 @@ let update_path_labels_flot path graph flow =
           add_newArcs (second :: rest) graph flow graph
   in add_newArcs path cloneGraph flow cloneGraph
 
-  let rec max_flow_of_path_cap list graph acu = 
+  (*let rec max_flow_of_path_cap list graph acu = 
     match list with
     | [] -> 0
     | _ :: [] -> acu
@@ -46,7 +46,7 @@ let update_path_labels_flot path graph flow =
       match arc with 
       | None -> failwith "Arc not found"
       | Some a -> if a.lbl.cap < acu then max_flow_of_path_cap (second :: rest) graph a.lbl.cap else max_flow_of_path_cap (second :: rest) graph acu
-
+*)
   (*trouver l'arc d'écart *)
 
 let find_ecart_arc arc =
