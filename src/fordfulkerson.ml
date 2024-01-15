@@ -12,10 +12,8 @@ let rec ford_fulkerson_algo graph src tgt flot_tot =
   let ecart_graph = find_ecart_graph graph in
   let path_found  = find_path ecart_graph src tgt [] in
     match path_found with
-    | None -> Printf.printf "Pas de chemin trouvé\n";
-              (graph, flot_tot)
-    | Some path_found -> Printf.printf "Chemin trouvé\n";
-      print_path path_found;                        
+    | None -> (graph, flot_tot)
+    | Some path_found -> print_path path_found;                        
       let flot = min_flow_of_path path_found ecart_graph max_int in 
       let newGraph = update_flot graph path_found flot in
       ford_fulkerson_algo newGraph src tgt (flot_tot + flot)

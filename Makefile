@@ -4,7 +4,7 @@ src?=0
 dst?=5
 graph?=graph10.txt
 game?=game1.txt
-team?=MI
+team?=DC
 
 all: build
 

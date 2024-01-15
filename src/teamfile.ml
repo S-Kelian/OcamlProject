@@ -162,7 +162,7 @@ let listG3_complete = node_game listG4 nomt in
 
 let gr =  new_node empty_graph 0  in 
 let idt = node_string_to_id listT3 listG3 "T" in 
-(**graph avec source et puits*)
+(*graph avec source et puits*)
 let gr_s_t = new_node gr idt in                                     
             
 (* Ajouter les nœuds du jeu et l'arc entre celui-ci et la source*)
@@ -230,6 +230,7 @@ in
  
 ;;
 
+(* Calcule la somme des valeurs des arcs sortants de la source de notre graphe*)
 let sum_of_source graph = 
   let arcs = out_arcs graph 0 in
   let rec loop arcs acu
@@ -238,6 +239,7 @@ let sum_of_source graph =
       | arc::arcs -> loop arcs (acu + int_of_string arc.lbl)
   in loop arcs 0
 ;;
+
 
 (******* Infile *******)
 
