@@ -15,8 +15,9 @@
     - [x] Algorithm isEliminated ?
 
 ## Test Minimum project
-To test the project run ```make demo``` in the root directory of the project. You can change the graph to test modifing the Makefile and choose the graph to test line 5 : ``` graph?= graphX.txt```.
+To test the project run ```make demo``` in the root directory of the project. You can change the graph to test modifing the Makefile and choose the graph to test line 5 : ``` graph?= graphX.txt```. You will get the generated outfile.svg containing the image after running the algorithm.
 
 ## Test Medium project
 To test the medium project, run ```make medium``` in the root directory of the project. You can change the team to test if she is eliminate modifing the Makefile and choose the team to test line 7 : ``` team?= name```.
+You will get the generated outfile.svg containing the graph base on the game file game1.txt.
 For the moment we can test in only one specific configuration but you can create a new one taking the example of games/game1.txt
