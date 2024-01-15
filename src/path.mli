@@ -8,8 +8,4 @@ val find_arc_in_path : 'a graph -> id list -> id -> id -> 'a arc option
 
 val min_flow_of_path : id list -> int graph -> int -> int
 
-(*val update_path_labels : id list -> 'a graph -> int -> 'a graph*)
-
-(*val test_find_path_with_maxflow : string -> id -> id -> unit*)
-
 val print_path : id list -> unit
