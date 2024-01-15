@@ -15,9 +15,13 @@ let rec find_path graph start finish visited =
     let rec loop = function
       | [] -> None
       | {tgt; _} :: rest ->
-          match find_path graph tgt finish (start :: visited) with
-          | Some p -> Some (start :: p)
-          | None -> loop rest
+          let arc = find_arc graph start tgt in
+          match arc with
+          | None -> failwith "Arc not found"
+          | Some a -> if a.lbl = 0 then loop rest else
+              match find_path graph tgt finish (start :: visited) with
+              | Some p -> Some (start :: p)
+              | None -> loop rest
     in
     loop arcsSortant
 

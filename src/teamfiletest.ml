@@ -45,7 +45,9 @@ let () =
 
   let sum_of_source = sum_of_source graph in
 
-  if sum_of_source < max then
-    Printf.printf "\n  🟄  %s est éliminé\n%!" team
+  Printf.printf "\n 🟄  Somme des arcs sortant de s : %d\n%!" sum_of_source ;
+
+  if max < sum_of_source then    
+    Printf.printf " \n  🟄  %s est éliminé\n%!" team
   else
     Printf.printf "\n  🟄  %s n'est pas éliminé\n%!" team
