@@ -12,4 +12,4 @@ val min_flow_of_path : id list -> int graph -> int -> int
 
 (*val test_find_path_with_maxflow : string -> id -> id -> unit*)
 
-
+val print_path : id list -> unit

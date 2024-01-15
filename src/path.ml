@@ -43,3 +43,12 @@ let rec min_flow_of_path list graph acu =
     match arc with 
     | None -> failwith "Arc not found"
     | Some a -> if a.lbl < acu then min_flow_of_path (second :: rest) graph a.lbl else min_flow_of_path (second :: rest) graph acu
+
+let rec print_path list = 
+  match list with
+  | [] -> ()
+  | last :: [] -> Printf.printf "%d\n" last
+  | first :: second :: rest -> 
+    Printf.printf "%d -> " first ;
+    print_path (second :: rest)
+;

@@ -1,0 +1,21 @@
+%% Format t <id Team> <Team ><Wins> <Losses> <Games Left>
+
+t 1 MI 83 71 8
+t 2 CSK 80 79 3
+t 3 KKR 78 78 6
+t 4 DC 77 82 3
+
+%% Format g <Team> <Another Team ><nb games left between two teams>
+
+g MI CSK 1
+g MI KKR 6
+g MI DC 1
+g CSK MI 1
+g CSK KKR 0
+g CSK DC 2
+g KKR MI 6
+g KKR CSK 0
+g KKR DC 0
+g DC MI 1
+g DC CSK 2
+g DC KKR 0

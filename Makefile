@@ -4,7 +4,7 @@ src?=0
 dst?=5
 graph?=graph10.txt
 game?=game1.txt
-team?=KKR
+team?=MI
 
 all: build
 
@@ -33,8 +33,7 @@ medium:
 
 	@echo "\n   ⚡  EXECUTING  ⚡\n"
 	./teamfiletest.exe games/${game} ${team} outfile
-	@echo "\n   🥁  RESULT (content of outfile)  🥁\n"
-	@cat outfile
+	@echo "\n   🥁  SUCCESS  🥁\n"
 	dot -Tsvg outfile > outfile.svg	
 
 clean:
