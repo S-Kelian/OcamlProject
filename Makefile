@@ -3,6 +3,7 @@
 src?=0
 dst?=5
 graph?=graph10.txt
+game?=game1.txt
 
 all: build
 
@@ -24,14 +25,15 @@ demo: build
 	@cat outfile
 	dot -Tsvg outfile > outfile.svg
 
-algotest: build
+medium: 
+	@echo "\n   🚨  COMPILING  🚨 \n"
+	dune build src/teamfiletest.exe
+	ls src/*.exe > /dev/null && ln -fs src/*.exe .
+
 	@echo "\n   ⚡  EXECUTING  ⚡\n"
-	./ftest.exe graphs/${graph} $(src) $(dst) outfile outfile_after_algo_from_$(src)_to_$(dst)
+	./teamfiletest.exe games/${game} outfile
 	@echo "\n   🥁  RESULT (content of outfile)  🥁\n"
 	@cat outfile
-	@cat outfile outfile_after_algo_from_$(src)_to_$(dst)
-	dot -Tsvg outfile > outfile.svg
-	dot -Tsvg outfile > outfile_after_algo_from_$(src)_to_$(dst).svg
 
 clean:
 	find -L . -name "*~" -delete

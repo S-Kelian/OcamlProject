@@ -11,7 +11,7 @@
 
 - [x] Minimum project : Implement the Ford-Fulkerson algorithm
 - [ ] Medium project : The Cricket elimination project
-    - [ ] Creation of the graph
+    - [x] Creation of the graph
     - [ ] Algorithm isEliminated ?
 
 ## Test Minimum project
