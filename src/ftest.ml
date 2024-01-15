@@ -34,6 +34,8 @@ let () =
 
   let graph = read_flot_graph_from_string_graph (from_file infile) in
 
+
+  (* TEST 1 : Algo de Ford-Fulkerson*)
   (* NB : Constructeurs, Setteurs, et Getteurs ne seront pas testés *)
   Printf.printf " Debut de l'algorithme de Ford-Fulkerson \n";
   let (exitGraph, flot_max) = ford_fulkerson_algo graph _source _sink 0 in

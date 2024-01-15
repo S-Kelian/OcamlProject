@@ -1,21 +1,18 @@
-Base project for Ocaml project on Ford-Fulkerson. This project contains some simple configuration files to facilitate editing Ocaml in VSCode.
+# Ocaml projet
 
-To use, you should install the *OCaml* extension in VSCode. Other extensions might work as well but make sure there is only one installed.
-Then open VSCode in the root directory of this repository (command line: `code path/to/ocaml-maxflow-project`).
+## Authors
+- SEBAICI Kelian
+- ZHU Xuxin
 
-Features :
- - full compilation as VSCode build task (Ctrl+Shift+b)
- - highlights of compilation errors as you type
- - code completion
- - automatic indentation on file save
+## Desciption
+**4th year Ocaml project** : Implementation of the **Ford-Fulkerson algorithm** to get the maximum flow of a graph.
 
+## Progress
 
-A makefile provides some useful commands:
- - `make build` to compile. This creates an ftest.native executable
- - `make demo` to run the `ftest` program with some arguments
- - `make format` to indent the entire project
- - `make edit` to open the project in VSCode
- - `make clean` to remove build artifacts
+- [x] Minimum project : Implement the Ford-Fulkerson algorithm
+- [ ] Medium project : The Cricket elimination project
+    - [ ] Creation of the graph
+    - [ ] Algorithm isEliminated ?
 
-In case of trouble with the VSCode extension (e.g. the project does not build, there are strange mistakes), a common workaround is to (1) close vscode, (2) `make clean`, (3) `make build` and (4) reopen vscode (`make edit`).
-
+## Test Minimum project
+To test the project run ```make demo``` in the root directory of the project. You can change the graph to test modifing the Makefile and choose the graph to test line 5 : ``` graph?= graphX.txt```.
