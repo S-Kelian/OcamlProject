@@ -11,7 +11,7 @@ let get_lbl label = label.lbl
 
 let string_lbl_flot lbl = "(" ^ string_of_int lbl.flot_actuel ^ "/" ^ string_of_int lbl.cap ^ ")";;
 let label_flot_to_string (label:lbl_flot) = "(" ^ string_of_int label.flot_actuel ^ "/" ^ string_of_int label.cap ^ ")"
-let string_to_label_flot label = Scanf.sscanf label "(%d/%d)" (fun flot cap -> {flot_actuel = flot; cap = cap})
+let string_to_label_flot label = Scanf.sscanf label "%d" (fun cap -> {flot_actuel = 0; cap = cap})
 
 let update_flot graph path flot =
   let newGraph = clone_nodes graph in

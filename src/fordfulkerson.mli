@@ -4,10 +4,7 @@ open Graph
 
 (*val update_path_labels : path -> 'a graph -> int -> 'a graph *)
 
-val ford_fulkerson_algo : lbl_flot graph -> id -> id -> lbl_flot graph 
-
-
-
+val ford_fulkerson_algo : lbl_flot graph -> id -> id -> int -> lbl_flot graph * int
 
 (* Convert a string (1/2) en label flot (1, 2) *)
 

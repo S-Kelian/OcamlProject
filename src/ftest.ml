@@ -36,7 +36,8 @@ let () =
 
   (* NB : Constructeurs, Setteurs, et Getteurs ne seront pas testés *)
   Printf.printf " Debut de l'algorithme de Ford-Fulkerson \n";
-  let exitGraph = ford_fulkerson_algo graph _source _sink in
+  let (exitGraph, flot_max) = ford_fulkerson_algo graph _source _sink 0 in
+  Printf.printf "Le flot max est de %d \n" flot_max;
   export outfile (export_string_graph_from_flot_graph exitGraph)
 
 
