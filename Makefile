@@ -4,6 +4,7 @@ src?=0
 dst?=5
 graph?=graph10.txt
 game?=game1.txt
+team?=KKR
 
 all: build
 
@@ -31,9 +32,10 @@ medium:
 	ls src/*.exe > /dev/null && ln -fs src/*.exe .
 
 	@echo "\n   ⚡  EXECUTING  ⚡\n"
-	./teamfiletest.exe games/${game} outfile
+	./teamfiletest.exe games/${game} ${team} outfile
 	@echo "\n   🥁  RESULT (content of outfile)  🥁\n"
 	@cat outfile
+	dot -Tsvg outfile > outfile.svg	
 
 clean:
 	find -L . -name "*~" -delete
