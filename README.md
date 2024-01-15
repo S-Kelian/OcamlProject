@@ -10,9 +10,9 @@
 ## Progress
 
 - [x] Minimum project : Implement the Ford-Fulkerson algorithm
-- [ ] Medium project : The Cricket elimination project
+- [x] Medium project : The Cricket elimination project
     - [x] Creation of the graph
-    - [ ] Algorithm isEliminated ?
+    - [x] Algorithm isEliminated ?
 
 ## Test Minimum project
 To test the project run ```make demo``` in the root directory of the project. You can change the graph to test modifing the Makefile and choose the graph to test line 5 : ``` graph?= graphX.txt```.
