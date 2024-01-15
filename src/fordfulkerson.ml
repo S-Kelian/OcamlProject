@@ -23,8 +23,8 @@ let rec ford_fulkerson_algo graph src tgt flot_tot =
 
 (* Convert a string (1/2) en label flot (1, 2) *)
 
-let read_flot_graph_from_string_graph graph = gmap graph string_to_label_flot
-let export_string_graph_from_flot_graph graph = gmap graph label_flot_to_string
+let read_flot_graph_from_string_graph graph = gmap graph string_to_lblflot
+let export_string_graph_from_flot_graph graph = gmap graph lblflot_to_string
 
 
 

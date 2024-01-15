@@ -7,11 +7,9 @@ type lbl_flot = {
   cap : int;
 }
 
-let get_lbl label = label.lbl
-
 let string_lbl_flot lbl = "(" ^ string_of_int lbl.flot_actuel ^ "/" ^ string_of_int lbl.cap ^ ")";;
-let label_flot_to_string (label:lbl_flot) = "(" ^ string_of_int label.flot_actuel ^ "/" ^ string_of_int label.cap ^ ")"
-let string_to_label_flot label = Scanf.sscanf label "%s" (fun cap -> if cap = "∞" then {flot_actuel = 0; cap = max_int} else
+let lblflot_to_string (label:lbl_flot) = "(" ^ string_of_int label.flot_actuel ^ "/" ^ string_of_int label.cap ^ ")"
+let string_to_lblflot label = Scanf.sscanf label "%s" (fun cap -> if cap = "∞" then {flot_actuel = 0; cap = max_int} else
    {flot_actuel = 0; cap = int_of_string cap})
 
 let update_flot graph path flot =
@@ -24,7 +22,6 @@ let update_flot graph path flot =
   ) newGraph 
 
   (*trouver l'arc d'écart *)
-
 let find_ecart_arc arc =
   { arc with lbl = { arc.lbl with flot_actuel = arc.lbl.cap - arc.lbl.flot_actuel } }
 
@@ -32,21 +29,18 @@ let find_ecart_arc arc =
 let find_ecart_graph graph = 
   let newGraph = clone_nodes graph in 
     let find_un_ecart graph arc = 
+      (* Toute la capacité de l'arête est disponible *)
       if arc.lbl.flot_actuel = 0 then 
-        let newA = { src = arc.src ; tgt = arc.tgt ; lbl = arc.lbl.cap} in 
-          new_arc graph newA
-    else
-      if arc.lbl.cap = arc.lbl.flot_actuel then  
-          let newA2 = { src = arc.tgt ; tgt = arc.src ; lbl = arc.lbl.cap} in 
-          new_arc graph newA2
-      else(
+        new_arc graph { src = arc.src ; tgt = arc.tgt ; lbl = arc.lbl.cap}
+      else
+        if arc.lbl.cap = arc.lbl.flot_actuel then  
+          (* Toute la capacité de l'arête est indisponible *)
+          new_arc graph { src = arc.tgt ; tgt = arc.src ; lbl = arc.lbl.cap} 
+        else
+          (* Redessiner les deux arcs *)
           let n = find_ecart_arc arc in
-          let newA3 = { src = arc.src ; tgt = arc.tgt ; lbl = n.lbl.flot_actuel} in 
-          let g = new_arc graph newA3
+          let g = new_arc graph { src = arc.src ; tgt = arc.tgt ; lbl = n.lbl.flot_actuel}
           in  
-          let newA4 = { src = arc.tgt ; tgt = arc.src ; lbl = arc.lbl.flot_actuel} in 
-           new_arc g newA4
-           
-      )
+          new_arc g { src = arc.tgt ; tgt = arc.src ; lbl = arc.lbl.flot_actuel}
   in 
   e_fold graph find_un_ecart newGraph

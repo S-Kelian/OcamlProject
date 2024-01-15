@@ -1,7 +1,7 @@
 open Graph
 open Printf
 
-(************New structures et getters************)
+(************Nouvelles structures et getters************)
 type team = {
     id : int;
     nom : string;
@@ -18,52 +18,53 @@ type game = {
 
 type name = string
 
+(*Obtenir le nombre de matches restants entre deux équipes données *)
 let get_nb_match_game ((monteam:name),(competitor:name)) (games:game list) =
   match List.find_opt (fun game -> (game.monteam = monteam && game.competitor = competitor) || (game.monteam = competitor && game.competitor = monteam)) games with
   | Some match_info -> match_info.nb_matchs_restants
   | None -> 0 
 
-
+(*Obtenir le nombre de matchs restants pour une équipe *)
 let get_list_nb_match_total_two_teams (nom:name) (teams:team list) =
   match List.find_opt (fun t -> (t.nom= nom)) teams with
   | Some match_info -> match_info.matchs_restants_total
   | None -> 0 
 
+(* Obtenir le nombre de matchs gagnés par une équipe *)
   let get_gagne (nom:name) (teams:team list) =
     match List.find_opt (fun t -> (t.nom= nom)) teams with
     | Some match_info -> match_info.gagne
     | None -> 0 
   
 
-(************ Read files ***********)
+(************ Lire les fichiers *************)
 
-(* Reads a line with a team. *)
+(* Lit une ligne avec une équipe. *)
+
 let read_team line listTeam listGame =
   try Scanf.sscanf line "t %d %s %d %d %d" (
-  fun idteam nomteam nbwin nbloses nbleft -> (
-    let new_team = {id = idteam; nom = nomteam; gagne = nbwin; pertes = nbloses; matchs_restants_total = nbleft} in
-    (new_team :: listTeam, listGame)
-  )
+   fun idteam nomteam nbwin nbloses nbleft -> (
+     let new_team = {id = idteam; nom = nomteam; gagne = nbwin; pertes = nbloses; matchs_restants_total = nbleft} in
+     (new_team :: listTeam, listGame)
+   )
   )
   with e ->
     Printf.printf "Cannot read node in line - %s:\n%s\n%!" (Printexc.to_string e) line ;
     failwith "from_file"
 
-(* Reads a line with a game. *)
+(* Lit une ligne avec le nombre de matchs restants des deux équipese. *)
 let read_game line listTeam listGame  =
   try Scanf.sscanf line "g %s %s %d"
     (fun nomteam anotherteam nbleft ->
       let new_game = {monteam = nomteam; competitor = anotherteam; nb_matchs_restants = nbleft} in
       (listTeam, new_game :: listGame)
-    )
-
-  
+    ) 
   with e ->
     Printf.printf "Cannot read node in line - %s:\n%s\n%!" (Printexc.to_string e) line ;
     failwith "from_file"
 
 
-(*read a comment*)
+(* Lit une commentaire. *)
 let read_comment_team line listTeam listGame =
   try Scanf.sscanf line " %%" (listTeam,listGame) 
   with _ ->
@@ -73,29 +74,30 @@ let read_comment_team line listTeam listGame =
 
 
 
-(************ Methodes pour id_to_string ***********)
+(************ string <-> pair  ***********)
 
-(*Convertir MI DC a MI-DC*)
-
-(*Convertir MI-DC a (MI,DC)*)
+(*Convertir le string MI_DC en pair(MI,DC)*)
 let split_teams team_string =
-  match String.split_on_char '-' team_string with
+  match String.split_on_char '_' team_string with
   | [team1; team2] -> (team1, team2)
   | _ -> failwith "Invalid team string format"
 
-(************ Get all nodes games and node nom ***********)
+(*Convertir le pair(MI,DC) en string MI-DC *)
+let string_two_teams_nom lstPairs =
+  List.map (fun (team1, team2) -> team1 ^ "_" ^ team2 ) lstPairs
 
-    let rec find_index_of_x x lst =
-      match lst with
-      | [] -> -1  (* Element not found, return -1 *)
-      | hd :: tl ->
-        if hd = x then 0  (* Element found at index 0 *)
-        else
-          let subresult = find_index_of_x x tl in
-          if subresult = -1 then failwith "x not found in list"  (* Element not found in sublist *)
-          else 1 + subresult  (* Adjust the index based on the sublist result *)
+
+(*Trouver l'index de x dans la liste*)
+let rec find_index_of_x x lst =
+  match lst with
+  | [] -> -1  (* Element not found, return -1 *)
+  | hd :: tl ->
+    if hd = x then 0  (* Element found at index 0 *)
+    else
+      let subresult = find_index_of_x x tl in
+      if subresult = -1 then failwith "x not found in list"  
+      else 1 + subresult  
     
-(*
 let node_id_to_string id listT3 listG3 =
   match id with
   | 0 -> "S"
@@ -105,8 +107,8 @@ let node_id_to_string id listT3 listG3 =
   | x when x > (List.length listG3 + List.length listT3) && x <= (List.length listG3 + List.length listT3 + 1) -> "T"
   | _ -> failwith "ID Node Not Exists"
 ;;
-*)
 
+(* Obtenez l'ID basé sur la nom du nœud *)   
 let node_string_to_id listT3 listG3 nomNode =
   match nomNode with
   | "S" -> 0
@@ -119,59 +121,51 @@ let node_string_to_id listT3 listG3 nomNode =
 
 (************ Create Graph methodes ***********)
 
+(* Obtenez tous les noms des équipes sauf celle qui a été désignée *)
 let node_team_nom listT team = List.filter_map (fun oneteam -> if oneteam.nom <> team then Some oneteam.nom else None) listT
+(* Obtenez toutes les équipes sauf celle qui a été désignée *)
+let node_team listT team = List.filter_map (fun oneteam -> if oneteam.nom <> team then Some oneteam else None) listT
+
+
+(* Obtenir tous les nœuds du jeu *)
+let node_game listG team = List.filter_map (fun onegame -> if (onegame.monteam <> team) && (onegame.competitor <> team) then Some onegame else None) listG
 let node_game_nom_pair listG team = List.filter_map (fun onegame -> if (onegame.monteam <> team) && (onegame.competitor <> team) 
   then Some (onegame.monteam ,onegame.competitor ) else None) listG 
 
-  let remove_reverse_combinations lst =
-    let rec aux acc = function
-      | [] -> acc
-      | (x, y) :: tl ->
-        if List.mem (y, x) tl || List.mem (x, y) tl then
-          aux acc tl
-        else
-          aux ((x, y) :: acc) tl
-    in
-    aux [] lst
-  
+(*Supprimez les doublons *)
+let remove_reverse_combinations lst =
+  let rec aux acc = function
+    | [] -> acc
+    | (x, y) :: tl ->
+      if List.mem (y, x) tl || List.mem (x, y) tl then
+        aux acc tl
+      else
+        aux ((x, y) :: acc) tl
+  in
+  aux [] lst 
 
-  let string_two_teams_nom lstPairs =
-    List.map (fun (team1, team2) -> team1 ^ "-" ^ team2 ) lstPairs
+(* Obtenir tous les noms des nœuds du jeu, à l'exception de l'équipe spécifiée et des doublons *)
+let node_game_nom lst t = string_two_teams_nom (remove_reverse_combinations (node_game_nom_pair lst t))
 
-    let display_list contents =
-      List.iter (fun x -> Printf.printf "%s\n" x) contents
 
-      let display_list_pair contents =
-        List.iter (fun (x,y) -> Printf.printf "(%s,%s) \n" x y )   contents
-
-let node_team listT team = List.filter_map (fun oneteam -> if oneteam.nom <> team then Some oneteam else None) listT
-let node_game listG team = List.filter_map (fun onegame -> if (onegame.monteam <> team) && (onegame.competitor <> team) then Some onegame else None) listG
 
 (************ Create Graph ***********)
+
 let construct_graph (listT4,listG4) nomt = 
-(*MI KKR DC*)
+
 let listT3 = node_team_nom listT4 nomt in 
-Printf.printf "ListT3 size :%d \n" (List.length listT3) ;
-(*MI-KKR KKR-DC DC-MI *)
-let listG3_doublons = node_game_nom_pair listG4 nomt in
-display_list_pair listG3_doublons ;
-Printf.printf "ListG3Doublons size :%d \n" (List.length listG3_doublons) ;
-(*MI-KKR DC-MI *)
-let listG3_pair = remove_reverse_combinations listG3_doublons in 
-display_list_pair listG3_pair ;
-Printf.printf "ListG3Pair size :%d \n" (List.length listG3_pair) ;
-let listG3 = string_two_teams_nom listG3_pair in 
-display_list listG3 ;
-Printf.printf "ListG3 size :%d \n" (List.length listG3) ;
+let listG3 = node_game_nom listG4 nomt in 
 
 let listT3_complete = node_team listT4 nomt in
-
 let listG3_complete = node_game listG4 nomt in
+
 
 let gr =  new_node empty_graph 0  in 
 let idt = node_string_to_id listT3 listG3 "T" in 
-    let gr_s_t = new_node gr idt in                                     
-                 
+(**graph avec source et puits*)
+let gr_s_t = new_node gr idt in                                     
+            
+(* Ajouter les nœuds du jeu et l'arc entre celui-ci et la source*)
 let rec construct_g1 listT listG graph_source = 
     match listG with
     | [] -> graph_source 
@@ -186,6 +180,7 @@ let rec construct_g1 listT listG graph_source =
 in 
 let g1 = construct_g1 listT3 listG3 gr_s_t in 
 
+(* Ajouter les nœuds de l'équipe*)
 let rec construct_g2 listT listG graph_source = 
     match listT with
     | [] -> graph_source 
@@ -197,6 +192,7 @@ let rec construct_g2 listT listG graph_source =
 in 
 let g2 = construct_g2 listT3 listG3 g1 in  
 
+(* Ajouter l'arc entre les nœuds de l'équipe et le nœud de jeu correspondant *)
 let rec construct_g2_2 listT listG gr = 
   match listG with
   | [] -> gr 
@@ -210,7 +206,8 @@ let rec construct_g2_2 listT listG gr =
 
 in 
 let g2_2 = construct_g2_2 listT3 listG3 g2 in 
-              
+ 
+(* Ajouter l'arc entre les nœuds de l'équipe et le puits *)
 let rec construct_g3 listT listG graph2 = 
   match listT with
     | [] -> graph2
@@ -229,7 +226,7 @@ in
   construct_g3 listT3 listG3 g2_2
 
 
-    (** let constrct graph lt lg nomteam = construct_g3 listT3 listG3 g3 *)
+  (** let constrct graph lt lg nomteam = construct_g3 listT3 listG3 g3 *)
  
 ;;
 
@@ -243,6 +240,7 @@ let sum_of_source graph =
 ;;
 
 (******* Infile *******)
+
 let from_file_game path team =
 
   let infile = open_in path in
@@ -270,42 +268,21 @@ let from_file_game path team =
       in      
       loop listT listG
 
-    with End_of_file -> (listTeam,listGame) (* Done *)
+    with End_of_file -> (listTeam,listGame)
   in
 
-  let final_list = loop []  [] in
-  let final_graph = construct_graph final_list team in
+  let (listTeam,listGame) = loop []  [] in
+  let final_graph = construct_graph (listTeam,listGame) team in
 
   close_in infile ;
-  final_graph
+  (final_graph,(listTeam,listGame))
 ;;
 
 
 
 (****** Outfile ************)
 
-let export_game path graph=
 
-  (* Open a write-file. *)
-  let ff = open_out path in
-
-  (* Write in this file. *)
-  fprintf ff "digraph our_graph {\n" ;
-  fprintf ff "  fontname=\"Helvetica,Arial,sans-serif\"\n" ;
-  fprintf ff "  node [fontname=\"Helvetica,Arial,sans-serif\"]\n" ;
-  fprintf ff "  edge [fontname=\"Helvetica,Arial,sans-serif\"]\n" ;
-  fprintf ff "  rankdir=LR;\n" ;
-  fprintf ff "  node [shape = circle];\n";
-
-  (* Write all arcs *)
-  e_iter graph (fun arc -> fprintf ff "  %d -> %d [label = \"%s\" ];\n" arc.src arc.tgt arc.lbl) ;
-  fprintf ff "}" ;
-
-  close_out ff ;
-  ()
-
-
-(*
   let export_game path graph (listT4,listG4)=
 
   let ff = open_out path in
@@ -315,14 +292,10 @@ let export_game path graph=
   fprintf ff "  edge [fontname=\"Helvetica,Arial,sans-serif\"]\n" ;
   fprintf ff "  rankdir=LR;\n" ;
   fprintf ff "  node [shape = circle];\n";
-
-
-  n_iter_sorted graph (fun id -> fprintf ff "  %s \n" id_to_string id listT4 listG4) ;
+  
   (* Write all arcs *)
-  (* Write all arcs *)
-  e_iter graph (fun arc -> fprintf ff "  %d -> %d [label = \"%s\" ];\n" arc.src arc.tgt arc.lbl) ;
+  e_iter graph (fun arc -> fprintf ff "  %s -> %s [label = \"%s\" ];\n" (node_id_to_string arc.src listT4 listG4) (node_id_to_string arc.tgt listT4 listG4) arc.lbl) ;
   fprintf ff "}" ;
 
   close_out ff ;
   ()
-  *)

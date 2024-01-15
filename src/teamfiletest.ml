@@ -1,7 +1,5 @@
 open Fordfulkerson
 open Teamfile
-open Gfile
-
 let () =
 
   (* Check the number of command-line arguments *)
@@ -28,14 +26,14 @@ let () =
   Printf.printf "\n\n  🟄  Opening file %s\n%!" infile ;
 
   (* Read the graph from the file *)
-  let graph = from_file_game infile team in
+  let (graph,(lt,lg)) = from_file_game infile team in
   Printf.printf "\n  🟄  Graph successfully created %s\n%!" infile ;
 
   (* NB : Constructeurs, Setteurs, et Getteurs ne seront pas testÃ©s *)
 
   let flot_graph = read_flot_graph_from_string_graph graph in
   Printf.printf "\n  🟄  Flot graph successfully created %s\n%!" infile ;
-  export outfile (export_string_graph_from_flot_graph flot_graph);
+  export_game outfile (export_string_graph_from_flot_graph flot_graph ) ((node_team_nom lt team),(node_game_nom lg team));
 
   (* Compute the max flow *)
 
