@@ -226,7 +226,7 @@ in
   construct_g3 listT3 listG3 g2_2
 
 
-  (** let constrct graph lt lg nomteam = construct_g3 listT3 listG3 g3 *)
+  (* let constrct graph lt lg nomteam = construct_g3 listT3 listG3 g3 *)
  
 ;;
 
@@ -242,6 +242,7 @@ let sum_of_source graph =
 
 
 (******* Infile *******)
+(* Retourner le graph avec une pair de teamlist et gamelist*)
 
 let from_file_game path team =
 

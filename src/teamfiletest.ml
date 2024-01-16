@@ -13,8 +13,7 @@ let () =
       exit 0
     end ;
 
-
-  (* Arguments are : infile(1) outfile(3) *)
+(* Arguments are : infile(1) team choisi (2) outfile(3) *)
 
   let infile = Sys.argv.(1)
   and team = Sys.argv.(2)
@@ -29,15 +28,15 @@ let () =
   let (graph,(lt,lg)) = from_file_game infile team in
   Printf.printf "\n  🟄  Graph successfully created %s\n%!" infile ;
 
-  (* NB : Constructeurs, Setteurs, et Getteurs ne seront pas testÃ©s *)
-
-  let flot_graph = read_flot_graph_from_string_graph graph in
+  let flot_graph = string_graph_to_flot_graph graph in
   Printf.printf "\n  🟄  Flot graph successfully created %s\n%!" infile ;
-  export_game outfile (export_string_graph_from_flot_graph flot_graph ) ((node_team_nom lt team),(node_game_nom lg team));
+  export_game outfile (flot_graph_to_string_graph flot_graph ) ((node_team_nom lt team),(node_game_nom lg team));
 
   (* Compute the max flow *)
 
-  let (_,max) = ford_fulkerson_algo flot_graph 0 7 0 in
+  let nb_node = List.length (node_team_nom lt team) + List.length (node_game_nom lg team) + 1 in 
+
+  let (_,max) = ford_fulkerson_algo flot_graph 0 nb_node 0 in
 
   Printf.printf "\n 🟄  Max flow pour %s : %d\n%!" team max ;
 

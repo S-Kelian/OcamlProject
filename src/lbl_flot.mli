@@ -5,7 +5,6 @@ open Path
 
 type lbl_flot
 
-val string_lbl_flot : lbl_flot -> string
 val lblflot_to_string: lbl_flot -> string
 val string_to_lblflot: string -> lbl_flot 
 val update_flot : lbl_flot graph -> path -> int -> lbl_flot graph

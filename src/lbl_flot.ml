@@ -7,8 +7,6 @@ type lbl_flot = {
   cap : int;
 }
 
-(*Permet de créer un string à partir d'un label flot*)
-let string_lbl_flot lbl = "(" ^ string_of_int lbl.flot_actuel ^ "/" ^ string_of_int lbl.cap ^ ")";;
 
 (*Permet de transformer un lblflot en string*)
 let lblflot_to_string (label:lbl_flot) = if label.cap == max_int then  

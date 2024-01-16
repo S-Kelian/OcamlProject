@@ -6,9 +6,6 @@ type game
 
 type name = string
 
-val node_team : team list -> string -> team list 
-val node_game : game list -> string -> game list
-
 val node_team_nom : team list -> string -> string list 
 val node_game_nom : game list -> name -> name list 
 val construct_graph :  team list * game list -> name -> string graph

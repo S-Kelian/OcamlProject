@@ -3,8 +3,7 @@ open Path
 open Tools
 
 
-(*TODO: update the current_flot (augment or reduce) of all arcs found in this path  *)
-(*p:le chemin augmentant*)
+(*path:le chemin augmentant*)
 (*Si l'arête actuelle est dans le chemin augmentant, on soustrait la capacité minimale de la capacité existante (capacité - min_capacity). *)
 
 (*algo principale*)
@@ -19,10 +18,9 @@ let rec ford_fulkerson_algo graph src tgt flot_tot =
       ford_fulkerson_algo newGraph src tgt (flot_tot + flot)
     ;;
 
-(* Convert a string (1/2) en label flot (1, 2) *)
-
-let read_flot_graph_from_string_graph graph = gmap graph string_to_lblflot
-let export_string_graph_from_flot_graph graph = gmap graph lblflot_to_string
+(* Convert string (1/2) en label flot (1, 2) *)
+let string_graph_to_flot_graph graph = gmap graph string_to_lblflot
+let flot_graph_to_string_graph graph = gmap graph lblflot_to_string
 
 
 
